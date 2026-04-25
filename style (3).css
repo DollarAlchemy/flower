@@ -1,0 +1,274 @@
+/* ============================================================
+   DIGITAL BLOOM GARDEN — style.css
+   Botanical, warm, natural aesthetic
+   ============================================================ */
+
+/* ---- CSS VARIABLES ---------------------------------------- */
+:root {
+  --cream:      #fef9f0;
+  --cream-dark: #f0e8d8;
+  --sage:       #7a9060;
+  --sage-dark:  #5a7040;
+  --earth:      #5a3f28;
+  --earth-light:#7a5a40;
+  --gold:       #c8980a;
+  --gold-light: #e8c040;
+  --text-dark:  #3a2a18;
+  --text-mid:   #6a5040;
+  --text-light: #9a8070;
+
+  --panel-bg:   rgba(254, 249, 240, 0.93);
+  --panel-shadow: 0 8px 40px rgba(60,40,10,0.22);
+  --panel-border: 1px solid rgba(200,180,140,0.55);
+
+  --radius-lg: 18px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+
+  --transition: 0.2s ease;
+}
+
+/* ---- RESET & BASE ----------------------------------------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1a2a14;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  color: var(--text-dark);
+}
+
+/* ---- CANVAS CONTAINER ------------------------------------- */
+#garden-wrap {
+  position: fixed;
+  inset: 0;
+}
+
+#garden-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+}
+
+/* Cursor becomes pointer when hovering a flower (set via JS) */
+#garden-canvas.hovering {
+  cursor: pointer;
+}
+
+/* ---- CONTROLS PANEL --------------------------------------- */
+#controls {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  width: 232px;
+
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+
+  border: var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--panel-shadow);
+  padding: 22px 20px 18px;
+
+  /* Subtle botanical texture: faint noise via box shadow layering */
+  background-image:
+    radial-gradient(circle at 10% 90%, rgba(180,220,130,0.08) 0%, transparent 60%),
+    radial-gradient(circle at 90% 10%, rgba(255,220,100,0.06) 0%, transparent 60%);
+}
+
+/* ---- PANEL TITLE ------------------------------------------ */
+.panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--earth);
+  text-align: center;
+  margin-bottom: 18px;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  line-height: 1.3;
+}
+
+.title-icon {
+  color: var(--gold);
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* ---- BUTTON GROUP ----------------------------------------- */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background 0.15s;
+}
+.btn:hover::after {
+  background: rgba(255,255,255,0.1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6a9850 0%, #4d7835 100%);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(70,110,40,0.3);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #d8c8a8 0%, #c0aa88 100%);
+  color: var(--earth);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn-primary:hover {
+  box-shadow: 0 5px 18px rgba(70,110,40,0.4);
+}
+.btn-secondary:hover {
+  box-shadow: 0 4px 14px rgba(100,70,30,0.2);
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* ---- SPEED SLIDER ----------------------------------------- */
+.slider-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.slider-row label {
+  font-size: 0.76rem;
+  color: var(--text-mid);
+  white-space: nowrap;
+}
+
+.slider-track-wrap {
+  position: relative;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--sage) 0%, var(--sage) var(--val, 44.4%), #d5c8b0 var(--val, 44.4%));
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--sage-dark);
+  box-shadow: 0 1px 5px rgba(0,0,0,0.25);
+  border: 2px solid #fff;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.18);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--sage-dark);
+  box-shadow: 0 1px 5px rgba(0,0,0,0.25);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+#speed-label {
+  font-size: 0.76rem;
+  color: var(--text-mid);
+  min-width: 14px;
+  text-align: right;
+}
+
+/* ---- HINT TEXT -------------------------------------------- */
+.hint-text {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  margin-top: 4px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ---- RESPONSIVE ------------------------------------------- */
+@media (max-width: 540px) {
+  #controls {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 16px 20px 20px;
+  }
+
+  .btn-group {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .btn {
+    padding: 9px 8px;
+    font-size: 0.75rem;
+    justify-content: center;
+  }
+
+  .btn-icon {
+    display: none;
+  }
+}

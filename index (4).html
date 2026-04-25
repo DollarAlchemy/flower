@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Bloom Garden</title>
+
+  <!-- Botanical serif for headings, clean sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- The full-screen canvas where all drawing happens -->
+  <div id="garden-wrap">
+    <canvas id="garden-canvas"></canvas>
+  </div>
+
+  <!-- Controls panel (top-right) -->
+  <aside id="controls">
+    <h1 class="panel-title">
+      <span class="title-icon">✦</span>
+      Digital Bloom Garden
+    </h1>
+
+    <div class="btn-group">
+      <button id="btn-bloom-all" class="btn btn-primary">
+        <span class="btn-icon">🌸</span> Bloom All
+      </button>
+      <button id="btn-reset" class="btn btn-secondary">
+        <span class="btn-icon">🌱</span> Reset Garden
+      </button>
+      <button id="btn-randomize" class="btn btn-secondary">
+        <span class="btn-icon">🎲</span> Randomize
+      </button>
+    </div>
+
+    <div class="slider-row">
+      <label for="speed-slider">Bloom Speed</label>
+      <div class="slider-track-wrap">
+        <input type="range" id="speed-slider" min="1" max="10" value="5" />
+      </div>
+      <span id="speed-label">5</span>
+    </div>
+
+    <p class="hint-text">✦ Click any flower to bloom it individually</p>
+    <p class="hint-text">✦ Hover a flower to see it glow</p>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
